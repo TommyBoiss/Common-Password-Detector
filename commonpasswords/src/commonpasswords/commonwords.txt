@@ -293,7 +293,6 @@ jaw
 bow
 bug
 hay
-ass
 cab
 web
 bee
