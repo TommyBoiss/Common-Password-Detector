@@ -1,5 +1,5 @@
 import re
-commonlayouts = [r'^[a-z]+${3}', r'^[0-9a-z,./*\-+]+${3}']
+commonlayouts = [r'^[a-z]{3,}$', r'^[0-9a-z,./*\-+]{3,}$']
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
 
 def detect(password:str, reason:bool = False):
@@ -8,7 +8,6 @@ def detect(password:str, reason:bool = False):
     passwordlower = password.lower()
     # CHECKING FOR COMMON LAYOUTS
     for i in commonlayouts:
-        test_set = set(i.lower())
         if re.match(i, passwordlower):
             if reason == True:
                 reasons.append("Contains common combination")
