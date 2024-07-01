@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "commonpasswords"
+version = "0.0.1"
+description = 'A way to detect common and unsecure passwords. (Warning: This is just a passion project and I would highly reccomend using an actual Common Password Detector in an real environment, or use another project ontop of this)'
+requires-python = ">=3.12"
+
+
+[project.urls]
+"Source code" = "https://github.com/TommyBoiss/Common-Password-Detector"
