@@ -4,10 +4,10 @@ checking for common patterns and common passwords.
 ## Warning
 This is just a passion project and I would highly reccomend using an actual Common Password Detector in an real environment, or use another project ontop of this.
 # Requirements
-
+`Python 3.12` [Link](https://www.python.org/downloads/release/python-3120/)
 # Quick Start
 `1:` **Install the package:**
-`[Insert Here]`
+`[Insert Here]` 
 `2.` **Import the library into your script:**
 ```
 import commonpasswords
@@ -19,4 +19,7 @@ commonpasswords.detect("[password]", True/False)
 ```
 # Detect Function
 The function "dectect" detects if the inputted password is common or unsecure
-```commonpasswords.detect([The password your trying to detect], [True/False Returns the reasons that is reduced points])```
+```
+commonpasswords.detect([The password your trying to detect], [True/False Returns the reasons that is reduced points in a table])
+Output: [Points, [Reasons]]
+```
