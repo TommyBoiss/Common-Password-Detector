@@ -6,3 +6,17 @@ This is just a passion project and I would highly reccomend using an actual Comm
 # Requirements
 
 # Quick Start
+`1:` **Install the package:**
+`[Insert Here]`
+`2.` **Import the library into your script:**
+```
+import commonpasswords
+```
+`3.` **Use the Detect function:**
+```
+import commonpasswords
+commonpasswords.detect("[password]", True/False)
+```
+# Detect Function
+The function "dectect" detects if the inputted password is common or unsecure
+```commonpasswords.detect([The password your trying to detect], [True/False Returns the reasons that is reduced points])```
