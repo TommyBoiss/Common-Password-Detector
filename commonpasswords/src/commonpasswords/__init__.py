@@ -38,16 +38,15 @@ def detect(password:str, reason:bool = False):
                         points += 1
                         alreadysetcommonwordsadd = True
 
+# Checking for consecutive letters
     match = re.search(consecutiveletterspattern, passwordlower)
     if match:
         if reason == True:
             reasons.append("Repetitive letters")
         points -= 1
-        alreadysetcommonwords = True
         
     else: 
         points += 1
-        alreadysetcommonwords = True
 
 
     if reason == True:
