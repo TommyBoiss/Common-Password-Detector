@@ -29,14 +29,20 @@ The configure function allows you to customize the library more! Running this fu
 *If data isn't entered here is will just resort to its default with no harm*
 ```
 {
-"startingpoints": Int
+"startingpoints": Int,
 
 "commonlayout": {
   "enabled": bool, # (Enabled?)
   "pointsremove": Int, # (How many points to remove if the check fails)
   "pointsadd": Int, # (How many points to add if the check passes)
   "reason": Str, # (If the check fails what is the reason it failed)
-}
+},
+"commonwords": {
+  "enabled": bool, # (Enabled?)
+  "pointsremove": Int, # (How many points to remove if the check fails)
+  "pointsadd": Int, # (How many points to add if the check passes)
+  "reason": Str, # (If the check fails what is the reason it failed)
+},
 
 }
 ```
