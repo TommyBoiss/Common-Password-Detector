@@ -1,104 +1,108 @@
 import re
-import json
 commonlayouts = ["abc", "qwerty", "efg", "123", "456"]
 consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
 
-startingnumber = 0
-
-commonlayoutenabled = True
-commonlayoutpointsremove = 1
-commonlayoutpointsadd = 0
-commonlayoutreason = "Contains common combination"
-
-commonwordsenabled = True
-commonwordpointsremove = 1
-commonwordspointsadd = 0
-commonwordsreason = "Contains common words"
-
-consecutivelettersenabled = True
-consecutivelettersremove = 1
-consecutivelettersadd = 0
-consecutivelettersreason = "Contains Repetitive letters"
-
-lengthenabled = True
-lengthrequirement = 8
-lengthremove = 1
-lengthadd = 0
-lengthreason = "Password is lower than " + str(lengthrequirement) + " characters"
-
-charactertypes = True
-charactertypesremove = 1
-charactertypesadd = 0
-charactertypesrequirement = 1
-charactertypesreason = "Only "+ str(charactertypesrequirement) +" type of Character"
 
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
+class main:
+ def __init__(self):
+    self.startingnumber = 0
 
-def configure(configuration:json):
-    print(configuration)
+    self.commonlayoutenabled = True
+    self.commonlayoutpointsremove = 1
+    self.commonlayoutpointsadd = 0
+    self.commonlayoutreason = "Contains common combination"
+
+    self.commonwordsenabled = True
+    self.commonwordpointsremove = 1
+    self.commonwordspointsadd = 0
+    self.commonwordsreason = "Contains common words"
+
+    self.consecutivelettersenabled = True
+    self.consecutivelettersremove = 1
+    self.consecutivelettersadd = 0
+    self.consecutivelettersreason = "Contains Repetitive letters"
+
+    self.lengthenabled = True
+    self.lengthrequirement = 8
+    self.lengthremove = 1
+    self.lengthadd = 0
+    self.lengthreason = "Password is lower than " + str(self.lengthrequirement) + " characters"
+
+    self.charactertypes = True
+    self.charactertypesremove = 1
+    self.charactertypesadd = 0
+    self.charactertypesrequirement = 1
+    self.charactertypesreason = "Only "+ str(self.charactertypesrequirement) +" type of Character"
+
+ def _configure(self, configuration:dict):
+    self.startingnumber = configuration["startingpoints"]
+    
 
 
 
-def detect(password:str, reason:bool = False):
+
+
+ def _detect(self, password:str, reason:bool = False):
     reasons = []
-    points = startingnumber
+    points = self.startingnumber
     passwordlower = password.lower().strip()
 
     # CHECKING FOR COMMON LAYOUTS
-    if commonlayoutenabled == True:
+    if self.commonlayoutenabled == True:
         alreadysetpatternsreasons = False
         for i in commonlayouts:
             if re.match(i, passwordlower):
                 if reason == True and alreadysetpatternsreasons == False:
-                    reasons.append(commonlayoutreason)
+                    reasons.append(self.commonlayoutreason)
                     alreadysetpatternsreasons = True
-                points -= commonlayoutpointsremove
+                points -= self.commonlayoutpointsremove
             else:
-                    points += commonlayoutpointsadd
+                    points += self.commonlayoutpointsadd
             
 
     # CHECKING FOR COMMON WORDS
-    if commonwordsenabled == True:
+    if self.commonwordsenabled == True:
      with open('src/commonpasswords/commonwords.txt', 'r') as file:
         alreadysetcommonwordsreasons = False
         alreadysetcommonwordsadd = False
         for line in file:
                 if line.strip() in passwordlower:
                     if reason == True and alreadysetcommonwordsreasons == False:
-                        reasons.append(commonwordsreason)
+                        reasons.append(self.commonwordsreason)
                         alreadysetcommonwordsreasons = True
-                    points -= commonwordpointsremove
+                    points -= self.commonwordpointsremove
                     alreadysetcommonwordsadd = True
                     break
         if alreadysetcommonwordsadd == True:
-            points += commonwordspointsadd
+            points += self.commonwordspointsadd
 
 
 
 # Checking for consecutive letters
-    if consecutivelettersenabled == True:
+    if self.consecutivelettersenabled == True:
         match = re.search(consecutiveletterspattern, passwordlower)
         if match:
             if reason == True:
-                reasons.append(consecutivelettersreason)
-            points -= consecutivelettersremove
+                reasons.append(self.consecutivelettersreason)
+            points -= self.consecutivelettersremove
         else:
-            points += consecutivelettersadd
+            points += self.consecutivelettersadd
         
 # Check if less than 8 characters
-    if lengthenabled == True:
-        if len(password) < lengthrequirement:
-            points -= lengthremove
+    if self.lengthenabled == True:
+        if len(password) < self.lengthrequirement:
+            points -= self.lengthremove
             if reason == True:
-                reasons.append(lengthreason)
+                reasons.append(self.lengthreason)
         else:
-            points += lengthadd
+            points += self.lengthadd
 
 
-    if charactertypes == True:
+    if self.charactertypes == True:
         CatagoryaCount = 0
         if re.search(letterspattern, passwordlower):
             CatagoryaCount += 1
@@ -106,12 +110,12 @@ def detect(password:str, reason:bool = False):
             CatagoryaCount += 1
         if re.search(specialpattern, passwordlower):
             CatagoryaCount += 1
-        if CatagoryaCount == charactertypesrequirement:
-            points -= charactertypesremove
+        if CatagoryaCount == self.charactertypesrequirement:
+            points -= self.charactertypesremove
             if reason == True:
-                reasons.append(charactertypesreason)
+                reasons.append(self.charactertypesreason)
         else:
-            points += charactertypesadd
+            points += self.charactertypesadd
 
          
     
@@ -121,4 +125,9 @@ def detect(password:str, reason:bool = False):
     else:
         return points
     
+mainclass = main()
+def configure(configuration:dict):
+    return mainclass._configure(configuration)
+def detect(password:str, reason:bool = False):
+    return mainclass._detect(password, reason)
     
