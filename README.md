@@ -23,3 +23,15 @@ The function "dectect" detects if the inputted password is common or unsecure
 commonpasswords.detect([The password your trying to detect], [True/False Returns the reasons that is reduced points in a table])
 Output: [Points, [Reasons]]
 ```
+
+# Configure
+The configure function allows you to customize the library more! Running this function before the detect function isn't required.
+*If data isn't entered here is will just resort to its default with no harm*
+{
+"startingpoints": Int
+
+"commonlayout": {
+}
+
+}
+
