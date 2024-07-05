@@ -36,6 +36,7 @@ The configure function allows you to customize the library more! Running this fu
   "pointsremove": Int, # (How many points to remove if the check fails)
   "pointsadd": Int, # (How many points to add if the check passes)
   "reason": Str, # (If the check fails what is the reason it failed)
+  "minimin": Int # (Atleast how many characters much match the layout before failint)
 },
 "commonwords": {
   "enabled": bool, # (Enabled?)
