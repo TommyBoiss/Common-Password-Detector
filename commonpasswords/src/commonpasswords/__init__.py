@@ -1,5 +1,5 @@
 import re
-commonlayouts = ["qwerty"]
+commonlayouts = ["qwerty", "qazwsxedcrfvtgbyhnujmik,ol.p;/"]
 consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
@@ -43,7 +43,7 @@ class main:
     self.dateenabled = True
     self.dateremove = 1
     self.dateadd = 0
-    self.datereason = "Only "+ str(self.charactertypesrequirement) +" type of Character"
+    self.datereason = "Possibily contains a date"
 
  def _configure(self, configuration:dict):
     self.startingnumber = configuration.get("startingpoints", 0)
@@ -55,6 +55,7 @@ class main:
         self.commonlayoutpointsremove = commonlayoutfolder.get("pointsremove", 1)
         self.commonlayoutpointsadd = commonlayoutfolder.get("pointsadd", 0)
         self.commonlayoutreason = commonlayoutfolder.get("reason", "Contains common combination")
+        self.commonlayoutreason = commonlayoutfolder.get("minimin", 3)
 
     commonwordsfolder = configuration.get("commonwords")
     if commonwordsfolder != None: 
@@ -62,6 +63,14 @@ class main:
         self.commonwordspointsremove = commonwordsfolder.get("pointsremove", 1)
         self.commonwordspointsadd = commonwordsfolder.get("pointsadd", 0)
         self.commonwordsreason = commonwordsfolder.get("reason", "Contains common words")
+
+    consecutivelettersfolder = configuration.get("consecutiveletters")
+    if consecutivelettersfolder != None: 
+        self.consecutivelettersenabled = consecutivelettersfolder.get("enabled", True)
+        self.consecutiveletterspointsremove = consecutivelettersfolder.get("pointsremove", 1)
+        self.consecutivelettersspointsadd = consecutivelettersfolder.get("pointsadd", 0)
+        self.consecutivelettersreason = consecutivelettersfolder.get("reason", "Contains Repetitive letters")
+
 
     # Finish off the code /: Have fun don't stay up lates
 
@@ -77,7 +86,7 @@ class main:
         for icommon in commonlayouts:
           
           for i in range(len(icommon) - 2):
-            substr = icommon[i:i+3]
+            substr = icommon[i:i+self.commonlayoutminimin-1]
 
             if substr in passwordlower:
              if alreadysetpatternsreasons == False:
@@ -147,10 +156,13 @@ class main:
         else:
             points += self.charactertypesadd
 
-    if re.search(datepattern, password):
-        points -= 1
+    if self.dateenabled == True:
+     if re.search(datepattern, password):
+        points -= self.dateremove
         if reason == True:
-            reasons.append("Possibily contains a date")
+            reasons.append(self.datereason)
+     else: 
+        points += self.dateadd
         
     
 
