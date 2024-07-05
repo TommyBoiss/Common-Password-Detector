@@ -1,9 +1,10 @@
 import re
-commonlayouts = ["abc", "qwerty", "efg", "123", "456"]
+commonlayouts = ["qwerty"]
 consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
+datepattern = r'[\d{4}]'
 
 
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
@@ -15,6 +16,7 @@ class main:
     self.commonlayoutpointsremove = 1
     self.commonlayoutpointsadd = 0
     self.commonlayoutreason = "Contains common combination"
+    self.commonlayoutminimin = 3
 
     self.commonwordsenabled = True
     self.commonwordspointsremove = 1
@@ -32,35 +34,36 @@ class main:
     self.lengthadd = 0
     self.lengthreason = "Password is lower than " + str(self.lengthrequirement) + " characters"
 
-    self.charactertypes = True
+    self.charactertypesenabled = True
     self.charactertypesremove = 1
     self.charactertypesadd = 0
     self.charactertypesrequirement = 1
     self.charactertypesreason = "Only "+ str(self.charactertypesrequirement) +" type of Character"
 
+    self.dateenabled = True
+    self.dateremove = 1
+    self.dateadd = 0
+    self.datereason = "Only "+ str(self.charactertypesrequirement) +" type of Character"
+
  def _configure(self, configuration:dict):
     self.startingnumber = configuration.get("startingpoints", 0)
+
     commonlayoutfolder = configuration.get("commonlayout")
+
     if commonlayoutfolder != None: 
         self.commonlayoutenabled = commonlayoutfolder.get("enabled", True)
         self.commonlayoutpointsremove = commonlayoutfolder.get("pointsremove", 1)
         self.commonlayoutpointsadd = commonlayoutfolder.get("pointsadd", 0)
         self.commonlayoutreason = commonlayoutfolder.get("reason", "Contains common combination")
 
-    commonwordsfolder = configuration.get("commonlayout")
+    commonwordsfolder = configuration.get("commonwords")
     if commonwordsfolder != None: 
         self.commonwordsenabled = commonwordsfolder.get("enabled", True)
         self.commonwordspointsremove = commonwordsfolder.get("pointsremove", 1)
         self.commonwordspointsadd = commonwordsfolder.get("pointsadd", 0)
         self.commonwordsreason = commonwordsfolder.get("reason", "Contains common words")
 
-
-
-
-
-
-
-
+    # Finish off the code /: Have fun don't stay up lates
 
 
  def _detect(self, password:str, reason:bool = False):
@@ -71,14 +74,24 @@ class main:
     # CHECKING FOR COMMON LAYOUTS
     if self.commonlayoutenabled == True:
         alreadysetpatternsreasons = False
-        for i in commonlayouts:
-            if re.match(i, passwordlower):
-                if reason == True and alreadysetpatternsreasons == False:
+        for icommon in commonlayouts:
+          
+          for i in range(len(icommon) - 2):
+            substr = icommon[i:i+3]
+
+            if substr in passwordlower:
+             if alreadysetpatternsreasons == False:
+                if reason == True:
                     reasons.append(self.commonlayoutreason)
-                    alreadysetpatternsreasons = True
+
                 points -= self.commonlayoutpointsremove
+                alreadysetpatternsreasons = True
+                print("remove")
+                
+
             else:
                     points += self.commonlayoutpointsadd
+        
             
 
     # CHECKING FOR COMMON WORDS
@@ -118,8 +131,8 @@ class main:
         else:
             points += self.lengthadd
 
-
-    if self.charactertypes == True:
+# Detects for more than a certain amount of text catagories
+    if self.charactertypesenabled == True:
         CatagoryaCount = 0
         if re.search(letterspattern, passwordlower):
             CatagoryaCount += 1
@@ -133,6 +146,13 @@ class main:
                 reasons.append(self.charactertypesreason)
         else:
             points += self.charactertypesadd
+
+    if re.search(datepattern, password):
+        points -= 1
+        if reason == True:
+            reasons.append("Possibily contains a date")
+        
+    
 
          
     
