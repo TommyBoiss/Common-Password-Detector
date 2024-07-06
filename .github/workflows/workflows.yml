@@ -32,4 +32,4 @@ jobs:
           pip install pytest
     - name: Run tests
       run: |
-        pytest __init__.py
+        pytest ./src/commonpasswords/__init__.py
