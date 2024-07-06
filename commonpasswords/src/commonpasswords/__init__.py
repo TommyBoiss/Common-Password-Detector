@@ -11,6 +11,7 @@ datepattern = r'\b(?:19|20)\d{2}(?!\d)'
 class main:
  def __init__(self):
     self.startingnumber = 0
+    self.commonwordsdatabase = 'src/commonpasswords/commonwords.txt'
 
     self.commonlayoutenabled = True
     self.commonlayoutpointsremove = 1
@@ -47,9 +48,9 @@ class main:
 
  def _configure(self, configuration:dict):
     self.startingnumber = configuration.get("startingpoints", 0)
-
+    self.commonwordsdatabase = configuration.get("commonwordsdatabase", 'src/commonpasswords/commonwords.txt')
+    
     commonlayoutfolder = configuration.get("commonlayout")
-
     if commonlayoutfolder != None: 
         self.commonlayoutenabled = commonlayoutfolder.get("enabled", True)
         self.commonlayoutpointsremove = commonlayoutfolder.get("pointsremove", 1)
@@ -135,7 +136,7 @@ class main:
 
     # CHECKING FOR COMMON WORDS
     if self.commonwordsenabled == True:
-     with open('src/commonpasswords/commonwords.txt', 'r') as file:
+     with open(self.commonwordsdatabase, 'r') as file:
         alreadysetcommonwordsreasons = False
         alreadysetcommonwordsadd = False
         for line in file:
