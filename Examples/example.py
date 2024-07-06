@@ -1,5 +1,6 @@
 import commonpasswords
-commonpasswords.configure({ "startingpoints": 10,
+def question():
+    print(commonpasswords.detect(input("Password\n"), True, { "startingpoints": 10,
 "commonlayout": {
   "enabled": True,
   "pointsremove": 5,
@@ -13,8 +14,6 @@ commonpasswords.configure({ "startingpoints": 10,
   "reason": "test"
 }
 
-})
-def question():
-    print(commonpasswords.detect(input("Password\n"), True))
+}))
     question()
 question()
