@@ -28,5 +28,10 @@ source_pkgs = ["commonpasswords"]
 [tool.coverage.paths]
 commonpasswords = ["src/commonpasswords", "*/src/commonpasswords"]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
 [tool.hatchling]
 SRC = "src"
