@@ -29,9 +29,11 @@ jobs:
       run: |
           python -m pip install --upgrade pip
 
-    - name: Install Hatch
-      uses: pypa/hatch@a3c83ab3d481fbc2dc91dd0088628817488dd1d5
+    - name: Install Packages
+      run: |
+        pip install pytest
+      
   
     - name: Run tests
       run: |
-         run: hatch run ./src/commonpasswords/__init__.py
+         run: pytest
