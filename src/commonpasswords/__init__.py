@@ -5,10 +5,13 @@ consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
-datepattern = r'*\b(?:19|20)\d{2}(?!\d)*'
+datepattern = r'\b(?:19|20)\d{2}\b'
 
 
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
+
+
+
 
 def detect(password:str, reason:bool = False, configuration:dict = {}):
     reasons = []
