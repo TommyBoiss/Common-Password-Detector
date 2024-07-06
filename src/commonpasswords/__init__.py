@@ -5,11 +5,10 @@ consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
-datepattern = r'\b(?:19|20)\d{2}(?!\d)'
+datepattern = r'*\b(?:19|20)\d{2}(?!\d)*'
 
 
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
-
 
 def detect(password:str, reason:bool = False, configuration:dict = {}):
     reasons = []
@@ -131,7 +130,7 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         alreadysetcommonwordsreasons = False
         alreadysetcommonwordsadd = False
         for line in file:
-                if line.strip() in passwordlower:
+                if line in passwordlower:
 
                     if reason == True and alreadysetcommonwordsreasons == False:
                         reasons.append(commonwordsreason)
