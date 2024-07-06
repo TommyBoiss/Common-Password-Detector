@@ -4,7 +4,7 @@ consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
-datepattern = r'[\d{4}]'
+datepattern = r'\b(?:19|20)\d{2}(?!\d)'
 
 
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
@@ -68,8 +68,34 @@ class main:
     if consecutivelettersfolder != None: 
         self.consecutivelettersenabled = consecutivelettersfolder.get("enabled", True)
         self.consecutiveletterspointsremove = consecutivelettersfolder.get("pointsremove", 1)
-        self.consecutivelettersspointsadd = consecutivelettersfolder.get("pointsadd", 0)
+        self.consecutiveletterspointsadd = consecutivelettersfolder.get("pointsadd", 0)
         self.consecutivelettersreason = consecutivelettersfolder.get("reason", "Contains Repetitive letters")
+        
+    lengthfolder = configuration.get("length")
+    if consecutivelettersfolder != None: 
+        self.lengthenabled = lengthfolder.get("enabled", True)
+        self.lengthrequirement = lengthfolder.get("requirement", 8)
+        self.lengthpointsremove = lengthfolder.get("pointsremove", 1)
+        self.lengthpointsadd = lengthfolder.get("pointsadd", 0)
+        self.lengthreason = lengthfolder.get("reason", "Password is lower than " + str(self.lengthrequirement) + " characters")
+
+    charactertypesfolder = configuration.get("charactertypes")
+    if consecutivelettersfolder != None: 
+        self.charactertypesenabled = charactertypesfolder.get("enabled", True)
+        self.charactertypesrequirement = charactertypesfolder.get("requirement", 8)
+        self.charactertypespointsremove = charactertypesfolder.get("pointsremove", 1)
+        self.charactertypespointsadd = charactertypesfolder.get("pointsadd", 0)
+        self.charactertypesreason = charactertypesfolder.get("reason", "Only "+ str(self.charactertypesrequirement) +" type of Character")
+
+        datefolder = configuration.get("date")
+    if consecutivelettersfolder != None: 
+        self.dateenabled = datefolder.get("enabled", True)
+        self.datepointsremove = datefolder.get("pointsremove", 1)
+        self.datepointsadd = datefolder.get("pointsadd", 0)
+        self.datereason = datefolder.get("reason", "Only "+ str(self.charactertypesrequirement) +" type of Character")
+
+
+
 
 
     # Finish off the code /: Have fun don't stay up lates
@@ -83,6 +109,7 @@ class main:
     # CHECKING FOR COMMON LAYOUTS
     if self.commonlayoutenabled == True:
         alreadysetpatternsreasons = False
+        alreadysetpatternsadd = False
         for icommon in commonlayouts:
           
           for i in range(len(icommon) - 2):
@@ -99,7 +126,10 @@ class main:
                 
 
             else:
-                    points += self.commonlayoutpointsadd
+                    if alreadysetpatternsadd == False:
+                        points += self.commonlayoutpointsadd
+                        alreadysetpatternsadd = True
+                        print("addlayout")
         
             
 
@@ -114,10 +144,11 @@ class main:
                         reasons.append(self.commonwordsreason)
                         alreadysetcommonwordsreasons = True
                     points -= self.commonwordspointsremove
-                    alreadysetcommonwordsadd = True
                     break
-        if alreadysetcommonwordsadd == True:
-            points += self.commonwordspointsadd
+                elif alreadysetcommonwordsadd == False:
+                    points += self.commonwordspointsadd
+                    alreadysetcommonwordsadd = True
+                    print("addwords")
 
 
 
