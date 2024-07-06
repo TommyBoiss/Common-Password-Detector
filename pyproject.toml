@@ -28,3 +28,5 @@ source_pkgs = ["commonpasswords"]
 [tool.coverage.paths]
 commonpasswords = ["src/commonpasswords", "*/src/commonpasswords"]
 
+[tool.hatchling]
+SRC = "src"
