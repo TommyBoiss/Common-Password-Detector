@@ -1,8 +1,8 @@
 # Common Password Dectetor
-Hello this is a project that I've worked on because I'm board! Anyway the purpose is to detect the security of an inputted password
+Hello this is a project that I've worked on because I'm bored! Anyway the purpose is to detect the security of an inputted password
 checking for common patterns and common passwords.
 ## Warning
-In default conditions I would reccomend only accepting 0 points
+In default conditions I would reccomend only accepting 0 to -1 points
 # Requirements
 `Python 3.12` [Link](https://www.python.org/downloads/release/python-3120/)
 # Quick Start
@@ -21,12 +21,12 @@ commonpasswords.detect("[password]", True/False)
 The function "dectect" detects if the inputted password is common or unsecure
 ```
 commonpasswords.detect(
-Str (What password you are trying to detect), (Output > Int)
-Bool (Returns reasons why points were deducted) (Output > Dict [points, [reasons]])
+Str, (Password: What password you are trying to detect), (Output > Int)
+Bool, (Return Reasons: Returns reasons why points were deducted) (Output > Dict [points, [reasons]])
+Dict, (Configuration: Allows you to configure the library more)
 ```
 
 # Configure
-The configure function allows you to customize the library more! Running this function before the detect function isn't required.
 *If data isn't entered here is will just resort to its default with no harm*
 ```
 {
