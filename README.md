@@ -2,7 +2,7 @@
 Hello this is a project that I've worked on because I'm board! Anyway the purpose is to detect the security of an inputted password
 checking for common patterns and common passwords.
 ## Warning
-This is just a passion project and I would highly reccomend using an actual Common Password Detector in an real environment, or use another project ontop of this.
+In default conditions I would reccomend only accepting 0 points
 # Requirements
 `Python 3.12` [Link](https://www.python.org/downloads/release/python-3120/)
 # Quick Start
@@ -20,8 +20,9 @@ commonpasswords.detect("[password]", True/False)
 # Detect Function
 The function "dectect" detects if the inputted password is common or unsecure
 ```
-commonpasswords.detect([The password your trying to detect], [True/False Returns the reasons that is reduced points in a table])
-Output: [Points, [Reasons]]
+commonpasswords.detect(
+Str (What password you are trying to detect), (Output > Int)
+Bool (Returns reasons why points were deducted) (Output > Dict [points, [reasons]])
 ```
 
 # Configure
