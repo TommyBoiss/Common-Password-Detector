@@ -123,14 +123,13 @@ class main:
 
                 points -= self.commonlayoutpointsremove
                 alreadysetpatternsreasons = True
-                print("remove")
                 
 
             else:
                     if alreadysetpatternsadd == False:
                         points += self.commonlayoutpointsadd
                         alreadysetpatternsadd = True
-                        print("addlayout")
+
         
             
 
@@ -141,15 +140,16 @@ class main:
         alreadysetcommonwordsadd = False
         for line in file:
                 if line.strip() in passwordlower:
+
                     if reason == True and alreadysetcommonwordsreasons == False:
                         reasons.append(self.commonwordsreason)
                         alreadysetcommonwordsreasons = True
                     points -= self.commonwordspointsremove
                     break
-                elif alreadysetcommonwordsadd == False:
-                    points += self.commonwordspointsadd
-                    alreadysetcommonwordsadd = True
-                    print("addwords")
+                else:
+                    if alreadysetcommonwordsadd == False:
+                        points += self.commonwordspointsadd
+                        alreadysetcommonwordsadd = True
 
 
 
