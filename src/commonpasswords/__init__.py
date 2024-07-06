@@ -11,10 +11,6 @@ datepattern = r'\b(?:19|20)\d{2}(?!\d)'
 # abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
 
 
-
-    # Finish off the code /: Have fun don't stay up lates
-
-
 def detect(password:str, reason:bool = False, configuration:dict = {}):
     reasons = []
     points = 0
@@ -22,7 +18,7 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
     commonwordsdatabase = importlib.resources.files(__package__) / "commonwords.txt"
 
     commonlayoutenabled = True
-    ommonlayoutpointsremove = 1
+    commonlayoutpointsremove = 1
     commonlayoutpointsadd = 0
     commonlayoutreason = "Contains common combination"
     commonlayoutminimin = 3
