@@ -12,6 +12,8 @@ datepattern = r'\b(?:19|20)\d{2}\b'
 
 
 
+    # Finish off the code /: Have fun don't stay up lates
+
 
 def detect(password:str, reason:bool = False, configuration:dict = {}):
     reasons = []
@@ -48,8 +50,8 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
     charactertypesreason = "Only "+ str(charactertypesrequirement) +" type of Character"
 
     dateenabled = True
-    dateremove = 1
-    dateadd = 0
+    datepointsremove = 1
+    datepointsadd = 0
     datereason = "Possibily contains a date"
     
     points = configuration.get("startingpoints", 0)
@@ -73,24 +75,24 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
     consecutivelettersfolder = configuration.get("consecutiveletters")
     if consecutivelettersfolder != None: 
         consecutivelettersenabled = consecutivelettersfolder.get("enabled", True)
-        consecutiveletterspointsremove = consecutivelettersfolder.get("pointsremove", 1)
-        consecutiveletterspointsadd = consecutivelettersfolder.get("pointsadd", 0)
+        consecutivelettersremove = consecutivelettersfolder.get("pointsremove", 1)
+        consecutivelettersadd = consecutivelettersfolder.get("pointsadd", 0)
         consecutivelettersreason = consecutivelettersfolder.get("reason", "Contains Repetitive letters")
         
     lengthfolder = configuration.get("length")
     if consecutivelettersfolder != None: 
         lengthenabled = lengthfolder.get("enabled", True)
         lengthrequirement = lengthfolder.get("requirement", 8)
-        lengthpointsremove = lengthfolder.get("pointsremove", 1)
-        lengthpointsadd = lengthfolder.get("pointsadd", 0)
+        lengthremove = lengthfolder.get("pointsremove", 1)
+        lengthadd = lengthfolder.get("pointsadd", 0)
         lengthreason = lengthfolder.get("reason", "Password is lower than " + str(lengthrequirement) + " characters")
 
     charactertypesfolder = configuration.get("charactertypes")
     if consecutivelettersfolder != None: 
         charactertypesenabled = charactertypesfolder.get("enabled", True)
         charactertypesrequirement = charactertypesfolder.get("requirement", 8)
-        charactertypespointsremove = charactertypesfolder.get("pointsremove", 1)
-        charactertypespointsadd = charactertypesfolder.get("pointsadd", 0)
+        charactertypesremove = charactertypesfolder.get("pointsremove", 1)
+        charactertypesadd = charactertypesfolder.get("pointsadd", 0)
         charactertypesreason = charactertypesfolder.get("reason", "Only "+ str(charactertypesrequirement) +" type of Character")
 
         datefolder = configuration.get("date")
@@ -129,12 +131,13 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
 
     # CHECKING FOR COMMON WORDS
     if commonwordsenabled == True:
-     with open(commonwordsdatabase, 'r') as file:
+     with commonwordsdatabase.open('r') as file:
         alreadysetcommonwordsreasons = False
         alreadysetcommonwordsadd = False
         for line in file:
-                if line in passwordlower:
-
+                print(line)
+                if line.strip() in passwordlower:
+                    print("IN")
                     if reason == True and alreadysetcommonwordsreasons == False:
                         reasons.append(commonwordsreason)
                         alreadysetcommonwordsreasons = True
@@ -142,8 +145,10 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
                     break
                 else:
                     if alreadysetcommonwordsadd == False:
+                        print("OUT")
                         points += commonwordspointsadd
                         alreadysetcommonwordsadd = True
+                        print("added")
 
 
 
@@ -184,11 +189,11 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
 
     if dateenabled == True:
      if re.search(datepattern, password):
-        points -= dateremove
+        points -= datepointsremove
         if reason == True:
             reasons.append(datereason)
      else: 
-        points += dateadd
+        points += datepointsadd
         
     
 
