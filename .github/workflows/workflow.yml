@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: 3.12  # specify the Python versions you want to test against
+        python-version: 
+          - 3.12  # specify the Python versions you want to test against
 
     steps:
     - uses: actions/checkout@v2
