@@ -12,7 +12,6 @@ datepattern = r'\b(?:19|20)\d{2}\b'
 
 
 
-    # Finish off the code /: Have fun don't stay up lates
 
 
 def detect(password:str, reason:bool = False, configuration:dict = {}):
@@ -135,20 +134,16 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         alreadysetcommonwordsreasons = False
         alreadysetcommonwordsadd = False
         for line in file:
-                print(line)
-                if line.strip() in passwordlower:
-                    print("IN")
+            if line.strip() in passwordlower.strip():
                     if reason == True and alreadysetcommonwordsreasons == False:
                         reasons.append(commonwordsreason)
                         alreadysetcommonwordsreasons = True
                     points -= commonwordspointsremove
                     break
-                else:
+            else:
                     if alreadysetcommonwordsadd == False:
-                        print("OUT")
                         points += commonwordspointsadd
                         alreadysetcommonwordsadd = True
-                        print("added")
 
 
 
