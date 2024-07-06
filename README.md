@@ -28,6 +28,7 @@ Dict, (Configuration: Allows you to configure the library more)
 
 # Configure
 *If data isn't entered here is will just resort to its default with no harm*
+**IN YOUR DATABASE FILE ENSURE YOU HAVE NO BLANK LINES AT THE BOTTOM**
 ```
 {
 "startingpoints": Int,
