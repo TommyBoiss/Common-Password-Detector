@@ -1,3 +1,3 @@
 import commonpasswords
 def test_detect():
-    assert commonpasswords.detect("password", reason=True) == [8, ['test', 'Only 1 type of Character']]
+    assert commonpasswords.detect("password", reason=True) == [-2, ['Contains common words', 'Only 1 type of Character']]
