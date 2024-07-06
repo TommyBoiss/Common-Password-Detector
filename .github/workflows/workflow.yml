@@ -5,10 +5,7 @@ on:
     branches:
       - main 
       - master
-defaults:
- run:
-  working-directory: ./commonpasswords
-  
+
 jobs:
   test:
     name: Test on Python ${{ matrix.python-version }}
@@ -28,4 +25,5 @@ jobs:
 
     - name: Run tests
       run: |
+        cd ./commonpasswords
         pytest  # adjust this command based on your testing framework and setup
