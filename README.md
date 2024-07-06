@@ -7,7 +7,9 @@ In default conditions I would reccomend only accepting 0 to -1 points
 `Python 3.12` [Link](https://www.python.org/downloads/release/python-3120/)
 # Quick Start
 `1:` **Install the package:**
-`[Insert Here]` 
+```
+pip install git+https://github.com/TommyBoiss/Common-Password-Detector
+```
 `2.` **Import the library into your script:**
 ```
 import commonpasswords
