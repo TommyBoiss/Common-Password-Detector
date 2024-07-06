@@ -30,6 +30,7 @@ The configure function allows you to customize the library more! Running this fu
 ```
 {
 "startingpoints": Int,
+"commonwordsdatabase" Str, # If you want to replace the default database input the path here
 
 "commonlayout": {
   "enabled": bool, # (Enabled?)
@@ -44,6 +45,26 @@ The configure function allows you to customize the library more! Running this fu
   "pointsadd": Int, # (How many points to add if the check passes)
   "reason": Str, # (If the check fails what is the reason it failed)
 },
+"length": {
+  "enabled": bool, # (Enabled?)
+  "requirement": int # (How long does it have to be to pass)
+  "pointsremove": Int, # (How many points to remove if the check fails)
+  "pointsadd": Int, # (How many points to add if the check passes)
+  "reason": Str, # (If the check fails what is the reason it failed)
+},
+"charactertypes": {
+  "enabled": bool, # (Enabled?)
+  "requirement": int # (How long does it have to be to pass)
+  "pointsremove": Int, # (How many points to remove if the check fails)
+  "pointsadd": Int, # (How many points to add if the check passes)
+  "reason": Str, # (If the check fails what is the reason it failed)
+},
+"date": {
+  "enabled": bool, # (Enabled?)
+  "pointsremove": Int, # (How many points to remove if the check fails)
+  "pointsadd": Int, # (How many points to add if the check passes)
+  "reason": Str, # (If the check fails what is the reason it failed)
+}
 
 }
 ```
