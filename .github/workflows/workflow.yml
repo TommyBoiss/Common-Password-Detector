@@ -25,5 +25,4 @@ jobs:
 
     - name: Run tests
       run: |
-        cd ./commonpasswords
-        pytest  # adjust this command based on your testing framework and setup
+        pytest commonpasswords/
