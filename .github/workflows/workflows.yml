@@ -30,6 +30,7 @@ jobs:
         run: |
           pip install pytest
           pip install .
+          pip install setuptools wheel
         
       - name: Run tests
         id: test
@@ -44,8 +45,7 @@ jobs:
     steps:
       - name: Deploy to Production
         run: |
-            pip install hatch
-            hatch build
-            hatch publish --user __token__ --auth ${{ secrets.APIKEY }}
+            python setup.py sdist bdist_wheel
+            twine upload --u __token__ --password ${{ secrets.APIKEY }} --repository pypi dist/*
             
         
