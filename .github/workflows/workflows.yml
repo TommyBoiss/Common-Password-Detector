@@ -46,6 +46,6 @@ jobs:
     steps:
       - name: Deploy to Production
         run: |
-            hatch publish --user __token__ --auth ${{ secrets.APIKET }}
+            hatch publish --user __token__ --auth ${{ secrets.APIKEY }}
             
         
