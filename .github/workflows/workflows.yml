@@ -45,7 +45,8 @@ jobs:
       - name: Deploy to Production
         run: |
             pip install hatch
-            hatch build
-            twine upload --user __token__ --auth ${{ secrets.APIKEY }}
+            pip install build
+            python -m build
+            hatch publish --user __token__ --auth ${{ secrets.APIKEY }}
             
         
