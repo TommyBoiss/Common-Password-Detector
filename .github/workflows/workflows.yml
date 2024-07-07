@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: Deploy to Production
         run: |
-            python -m build dist/
+            python -m build
             twine upload --u __token__ --password ${{ secrets.APIKEY }} --repository pypi dist/*
             
         
