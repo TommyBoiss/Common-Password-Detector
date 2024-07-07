@@ -3,10 +3,8 @@ name: Python CI
 on:
   push:
     branches:
-      - main 
+      - main
       - master
-
-
 
 jobs:
   test:
@@ -14,35 +12,39 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: 
+        python-version:
           - 3.12  # specify the Python versions you want to test against
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-        
-    - name: Install dependencies
-      run: |
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
           python -m pip install --upgrade pip
 
-    - name: Install Packages
-      run: |
-        pip install pytest
-        pip install hatch
-        pip install .
-      
-  
-    - name: Run tests
-      id: test
-      run: |
-        pytest
-        steps:
-          - name: Deploy to Production
-          run: |
+      - name: Install Packages
+        run: |
+          pip install pytest
+          pip install .
+
+      - name: Run tests
+        id: test
+        run: |
+          pytest
+
+  deploy:
+    needs: test 
+    if: ${{ needs.test.result == 'success' }} 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Production
+        run: |
             hatch publish --user __token__ --auth ${{ secrets.APIKET }}
             
         
