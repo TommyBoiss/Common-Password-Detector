@@ -45,6 +45,7 @@ jobs:
       - name: Deploy to Production
         run: |
             pip install hatch
+            hatch build
             hatch publish --user __token__ --auth ${{ secrets.APIKEY }}
             
         
