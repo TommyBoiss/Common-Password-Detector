@@ -1,6 +1,6 @@
 name: Python CI
 
-on:
+on: 
   push:
     branches:
       - main
@@ -39,21 +39,22 @@ jobs:
     needs: test 
     if: ${{ needs.test.result == 'success' }} 
     runs-on: ubuntu-latest
+    environment:
+       name: pypi
+       url: https://pypi.org/p/commonpasswords
+    permissions:
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Production
         id: build
         run: |
-            pip install build
-            python -m build --sdist
+            pipx run build
 
   deploy:
      needs: build
      runs-on: ubuntu-latest
-     environment:
-       name: pypi
-       url: https://pypi.org/p/commonpasswords
      permissions:
       id-token: write
      steps:
