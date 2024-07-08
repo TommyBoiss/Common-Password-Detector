@@ -46,7 +46,7 @@ jobs:
         id: build
         run: |
             pip install build
-            python -m --sdist build 
+            python -m build --sdist
 
   deploy:
      needs: build
