@@ -9,6 +9,8 @@ In default conditions I would reccomend only accepting 0 to -1 points
 `1:` **Install the package:**
 ```
 pip install git+https://github.com/TommyBoiss/Common-Password-Detector
+or
+pip install commonpasswords
 ```
 `2.` **Import the library into your script:**
 ```
