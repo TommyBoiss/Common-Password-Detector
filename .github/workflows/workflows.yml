@@ -57,8 +57,8 @@ jobs:
      permissions:
       id-token: write
      steps:
-       ls -l
        - uses: actions/checkout@v4
+       - run: ls -l
        - name: Publish package distributions to PyPI
          uses: pypa/gh-action-pypi-publish@release/v1
      
