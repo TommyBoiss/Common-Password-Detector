@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "commonpasswords"
-version = "1.1"
+version = "1.0"
 description = 'A way to detect common and unsecure passwords.'
 requires-python = ">=3.12"
 license = "MIT"
