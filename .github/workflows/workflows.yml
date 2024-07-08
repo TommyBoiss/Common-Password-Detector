@@ -45,8 +45,8 @@ jobs:
       - name: Deploy to Production
         id: build
         run: |
-            pip install hatch
-            hatch build
+            pip install build
+            python -m build
 
   deploy:
      needs: build
