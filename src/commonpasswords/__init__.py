@@ -1,24 +1,20 @@
 import importlib.resources
 import re
+
 commonlayouts = ["qwerty", "qazwsxedcrfvtgbyhnujmik,ol.p;/"]
-consecutiveletterspattern = r'([a-zA-Z0-9])\1\1'
+consecutiveletterspattern = r"([a-zA-Z0-9])\1\1"
 digitpattern = r"[0-9]"
 letterspattern = r"[a-zA-Z]"
 specialpattern = r'[!@#$%^&*()-+{}:"?/><,.;:]'
-datepattern = r'\b(?:19|20)\d{2}\b'
+datepattern = r"\b(?:19|20)\d{2}\b"
 
 
-# abcdefghijklmnopqrstuvwxyz 1234567890qwertyuiopasdfghjklzxcvbnm,./*-+
-
-
-
-
-def detect(password:str, reason:bool = False, configuration:dict = {}):
+def detect(password: str, reason: bool = False, configuration: dict = {}):
     def typecheck(check, compare, name):
-         if type(check) != compare: 
-            raise TypeError("Error: "+ name + " Recieved Not A "+ str(compare))
-         else:
-             print("success")
+        if type(check) != compare:
+            raise TypeError("Error: " + name + " Recieved Not A " + str(compare))
+        else:
+            print("success")
 
     reasons = []
     points = 0
@@ -51,31 +47,38 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
     charactertypesremove = 1
     charactertypesadd = 0
     charactertypesrequirement = 1
-    charactertypesreason = "Only "+ str(charactertypesrequirement) +" type of Character"
+    charactertypesreason = (
+        "Only " + str(charactertypesrequirement) + " type of Character"
+    )
 
     dateenabled = True
     datepointsremove = 1
     datepointsadd = 0
     datereason = "Possibily contains a date"
-    
+
     points = configuration.get("startingpoints", 0)
-    commonwordsdatabase = configuration.get("commonwordsdatabase", importlib.resources.files(__package__) / "commonwords.txt")
-    
+    commonwordsdatabase = configuration.get(
+        "commonwordsdatabase",
+        importlib.resources.files(__package__) / "commonwords.txt",
+    )
+
     commonlayoutfolder = configuration.get("commonlayout")
-    if commonlayoutfolder != None: 
+    if commonlayoutfolder != None:
         commonlayoutenabled = commonlayoutfolder.get("enabled", True)
         typecheck(commonlayoutenabled, bool, "commonlayoutenabled")
         commonlayoutpointsremove = commonlayoutfolder.get("pointsremove", 1)
         typecheck(commonlayoutpointsremove, int, "commonlayoutpointsremove")
         commonlayoutpointsadd = commonlayoutfolder.get("pointsadd", 0)
         typecheck(commonlayoutpointsadd, int, "commonlayoutpointsadd")
-        commonlayoutreason = commonlayoutfolder.get("reason", "Contains common combination")
+        commonlayoutreason = commonlayoutfolder.get(
+            "reason", "Contains common combination"
+        )
         typecheck(commonlayoutreason, str, "commonlayoutreason")
         commonlayoutminimin = commonlayoutfolder.get("minimin", 3)
         typecheck(commonlayoutminimin, int, "commonlayoutminimin")
 
     commonwordsfolder = configuration.get("commonwords")
-    if commonwordsfolder != None: 
+    if commonwordsfolder != None:
         commonwordsenabled = commonwordsfolder.get("enabled", True)
         typecheck(commonwordsenabled, bool, "commonwordsenabled")
         commonwordspointsremove = commonwordsfolder.get("pointsremove", 1)
@@ -86,18 +89,20 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         typecheck(commonwordsreason, str, "commonwordsreason")
 
     consecutivelettersfolder = configuration.get("consecutiveletters")
-    if consecutivelettersfolder != None: 
+    if consecutivelettersfolder != None:
         consecutivelettersenabled = consecutivelettersfolder.get("enabled", True)
         typecheck(consecutivelettersenabled, bool, "consecutivelettersenabled")
         consecutivelettersremove = consecutivelettersfolder.get("pointsremove", 1)
         typecheck(consecutivelettersremove, int, "consecutivelettersremove")
         consecutivelettersadd = consecutivelettersfolder.get("pointsadd", 0)
         typecheck(consecutivelettersadd, int, "consecutivelettersadd")
-        consecutivelettersreason = consecutivelettersfolder.get("reason", "Contains Repetitive letters")
+        consecutivelettersreason = consecutivelettersfolder.get(
+            "reason", "Contains Repetitive letters"
+        )
         typecheck(consecutivelettersreason, str, "consecutivelettersreason")
-        
+
     lengthfolder = configuration.get("length")
-    if consecutivelettersfolder != None: 
+    if consecutivelettersfolder != None:
         lengthenabled = lengthfolder.get("enabled", True)
         typecheck(lengthenabled, bool, "lengthenabled")
         lengthrequirement = lengthfolder.get("requirement", 8)
@@ -106,11 +111,13 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         typecheck(lengthremove, int, "lengthremove")
         lengthadd = lengthfolder.get("pointsadd", 0)
         typecheck(lengthadd, int, "lengthadd")
-        lengthreason = lengthfolder.get("reason", "Password is lower than " + str(lengthrequirement) + " characters")
+        lengthreason = lengthfolder.get(
+            "reason", "Password is lower than " + str(lengthrequirement) + " characters"
+        )
         typecheck(lengthreason, str, "lengthreason")
 
     charactertypesfolder = configuration.get("charactertypes")
-    if consecutivelettersfolder != None: 
+    if consecutivelettersfolder != None:
         charactertypesenabled = charactertypesfolder.get("enabled", True)
         typecheck(charactertypesenabled, bool, "charactertypesenabled")
         charactertypesrequirement = charactertypesfolder.get("requirement", 8)
@@ -119,67 +126,64 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         typecheck(charactertypesremove, int, "charactertypesremove")
         charactertypesadd = charactertypesfolder.get("pointsadd", 0)
         typecheck(datefolder, int, "charactertypesadd")
-        charactertypesreason = charactertypesfolder.get("reason", "Only "+ str(charactertypesrequirement) +" type of Character")
+        charactertypesreason = charactertypesfolder.get(
+            "reason", "Only " + str(charactertypesrequirement) + " type of Character"
+        )
         typecheck(charactertypesreason, str, "charactertypesreason")
 
         datefolder = configuration.get("date")
-    if consecutivelettersfolder != None: 
+    if consecutivelettersfolder != None:
         dateenabled = datefolder.get("enabled", True)
         typecheck(dateenabled, bool, "dateenabled")
         datepointsremove = datefolder.get("pointsremove", 1)
         typecheck(datepointsremove, int, "datepointsremove")
         datepointsadd = datefolder.get("pointsadd", 0)
         typecheck(datepointsadd, int, "datepointsadd")
-        datereason = datefolder.get("reason", "Only "+ str(charactertypesrequirement) +" type of Character")
+        datereason = datefolder.get(
+            "reason", "Only " + str(charactertypesrequirement) + " type of Character"
+        )
         typecheck(datefolder, str, "datereason")
-
 
     # CHECKING FOR COMMON LAYOUTS
     if commonlayoutenabled == True:
         alreadysetpatternsreasons = False
         alreadysetpatternsadd = False
         for icommon in commonlayouts:
-          
-          for i in range(len(icommon) - 2):
-            substr = icommon[i:i+commonlayoutminimin-1]
 
-            if substr in passwordlower:
-             if alreadysetpatternsreasons == False:
-                if reason == True:
-                    reasons.append(commonlayoutreason)
+            for i in range(len(icommon) - 2):
+                substr = icommon[i : i + commonlayoutminimin - 1]
 
-                points -= commonlayoutpointsremove
-                alreadysetpatternsreasons = True
-                
+                if substr in passwordlower:
+                    if alreadysetpatternsreasons == False:
+                        if reason == True:
+                            reasons.append(commonlayoutreason)
 
-            else:
+                        points -= commonlayoutpointsremove
+                        alreadysetpatternsreasons = True
+
+                else:
                     if alreadysetpatternsadd == False:
                         points += commonlayoutpointsadd
                         alreadysetpatternsadd = True
 
-        
-            
-
     # CHECKING FOR COMMON WORDS
     if commonwordsenabled == True:
-     with commonwordsdatabase.open('r') as file:
-        alreadysetcommonwordsreasons = False
-        alreadysetcommonwordsadd = False
-        for line in file:
-            if line.strip() in passwordlower.strip():
+        with commonwordsdatabase.open("r") as file:
+            alreadysetcommonwordsreasons = False
+            alreadysetcommonwordsadd = False
+            for line in file:
+                if line.strip() in passwordlower.strip():
                     if reason == True and alreadysetcommonwordsreasons == False:
                         reasons.append(commonwordsreason)
                         alreadysetcommonwordsreasons = True
                     points -= commonwordspointsremove
                     break
-            else:
+                else:
                     if alreadysetcommonwordsadd == False:
                         points += commonwordspointsadd
                         alreadysetcommonwordsadd = True
 
-
-
-# Checking for consecutive letters
+    # Checking for consecutive letters
     if consecutivelettersenabled == True:
         match = re.search(consecutiveletterspattern, passwordlower)
         if match:
@@ -188,8 +192,8 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
             points -= consecutivelettersremove
         else:
             points += consecutivelettersadd
-        
-# Check if less than 8 characters
+
+    # Check if less than 8 characters
     if lengthenabled == True:
         if len(password) < lengthrequirement:
             points -= lengthremove
@@ -198,7 +202,7 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
         else:
             points += lengthadd
 
-# Detects for more than a certain amount of text catagories
+    # Detects for more than a certain amount of text catagories
     if charactertypesenabled == True:
         CatagoryaCount = 0
         if re.search(letterspattern, passwordlower):
@@ -215,20 +219,14 @@ def detect(password:str, reason:bool = False, configuration:dict = {}):
             points += charactertypesadd
 
     if dateenabled == True:
-     if re.search(datepattern, password):
-        points -= datepointsremove
-        if reason == True:
-            reasons.append(datereason)
-     else: 
-        points += datepointsadd
-        
-    
-
-         
-    
+        if re.search(datepattern, password):
+            points -= datepointsremove
+            if reason == True:
+                reasons.append(datereason)
+        else:
+            points += datepointsadd
 
     if reason == True:
         return [points, reasons]
     else:
         return points
-    
