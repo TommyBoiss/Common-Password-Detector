@@ -1,5 +1,5 @@
 import commonpasswords
-# Importing the commonpasswords mldule
+# Importing the commonpasswords moldule
 def question():
     # Defining the Function
     print(commonpasswords.detect(input("Password\n"), True))
