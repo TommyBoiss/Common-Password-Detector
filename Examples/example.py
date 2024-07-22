@@ -1,5 +1,5 @@
 import commonpasswords
-# Importing the commonpasswords moldule
+# Importing the commonpasswords module
 def question():
     # Defining the Function
     print(commonpasswords.detect(input("Password\n"), True))
